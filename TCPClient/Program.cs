@@ -28,7 +28,12 @@ namespace TCPClient
 
             Vector2 data = new Vector2(1, 2); 
 
-            client.SendData("localhost", 8888, totalFile);
+            MessageContent message = new MessageContent(totalFile, "MrDNA", "Red");
+
+            byte[] bytes = File.ReadAllBytes("C:\\Users\\MrDNA\\Downloads\\porp2.out");
+
+
+            client.SendData("localhost", 8888, bytes);
         }
     }
 }

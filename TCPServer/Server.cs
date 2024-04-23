@@ -1,6 +1,12 @@
 ﻿using System.Net.Sockets;
 using System.Net;
 using System.Text.Json;
+using System.Numerics;
+using System.Linq;
+using System.Text.Json.Serialization;
+//using Newtonsoft.Json;
+using System.Collections;
+using System.Text;
 
 namespace TCPServer
 {
@@ -10,7 +16,14 @@ namespace TCPServer
 
         public object DataReceived { get; private set; }
 
-        public bool DataHasBeenReceived { get; private set;}
+        public byte[] ReceivedData { get; private set; }
+
+        public bool DataHasBeenReceived { get; private set; }
+
+        public T GetData <T>()
+        {
+            return JsonSerializer.Deserialize<T>(ReceivedData);
+        }
 
         public Server(int port)
         {
@@ -57,7 +70,9 @@ namespace TCPServer
                 }
 
                 memoryStream.Position = 0;
-                DataReceived = JsonSerializer.Deserialize<string>(memoryStream);
+               // DataReceived = JsonSerializer.Deserialize<MessageContent>(memoryStream);
+
+                ReceivedData = memoryStream.ToArray();
                 Console.WriteLine("Received All Data");
                 DataHasBeenReceived = true;
             }

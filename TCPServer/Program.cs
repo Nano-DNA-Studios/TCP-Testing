@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using System.Text.Json;
 
 namespace TCPServer
 {
@@ -10,8 +11,10 @@ namespace TCPServer
 
             server.StartServer();
 
-            string data = (string)server.DataReceived;
+            //MessageContent data = server.GetData<MessageContent>();
+            byte[] data = server.GetData<byte[]>();
 
+            File.WriteAllBytes("data.out", data);
 
             Console.WriteLine(data);
 
